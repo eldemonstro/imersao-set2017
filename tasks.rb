@@ -1,13 +1,12 @@
 puts 'Bem-vindo ao Task List'
 opcao = 0
-tarefa_index = 0
 tarefas = []
 
 while opcao != 4 do
   if opcao == 1
     puts "\nInforme o nome da tarefa"
-    tarefas << {nome: gets.chomp, finalizada: false, id: tarefa_index}
-    tarefa_index += 1
+    nome_tarefa = gets.chomp
+    tarefas << {nome: nome_tarefa, finalizada: false, id: tarefas.length}
     puts 'Nova tarefa cadastrada: ' + nome_tarefa
   elsif opcao == 2
     puts "\nSuas tarefas sao:"
