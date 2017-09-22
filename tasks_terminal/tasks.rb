@@ -20,7 +20,7 @@ def print_tarefas(tarefas)
   if tarefas.empty?
     puts "N\xC3\xA3o h\xC3\xA1 tarefas"
   elsif
-    tarefas.each(&:print_tarefa)
+    tarefas.each { |t| puts t.to_s }
   end
 end
 
@@ -30,9 +30,15 @@ tarefas = []
 
 while opcao != SAIR
   if opcao == INSERIR_TAREFA
-    puts "\nInforme o nome da tarefa"
+    puts "\nInserindo uma nova tarefa\nInforme o nome da tarefa"
     nome_tarefa = gets.chomp
-    tarefas << Task.new(nome_tarefa, tarefas.length)
+    puts "Ela est\xC3\xA1 finalizada (1 - Sim | 2 - Nao)"
+    finalizada = gets.to_i
+    tarefas << if finalizada == 1
+                 Task.new(nome_tarefa, tarefas.length, true)
+               else
+                 Task.new(nome_tarefa, tarefas.length)
+               end
     puts 'Nova tarefa cadastrada: ' + nome_tarefa
   elsif opcao == MOSTRAR_TAREFA
     puts "\nSuas tarefas sao:"
@@ -40,11 +46,15 @@ while opcao != SAIR
   elsif opcao == BUSCAR_TAREFA
     puts "\nBuscando tarefas\nDigite o nome da tarefa a buscar"
     texto_busca = gets.chomp.downcase
-    tarefas_encontradas = tarefas.select { |tarefa| tarefa.nome.downcase.include? texto_busca.downcase }
-    print_tarefas(tarefas_encontradas)
+    tarefas_encontradas = tarefas.select { |tarefa| tarefa.include? texto_busca }
+    print_tarefas tarefas_encontradas
   elsif opcao == FINALIZAR_TAREFA
+    puts "\nLista de tarefas"
+    print_tarefas tarefas
     puts "\nInforme o id da tarefa a marcar como finalizada"
-    tarefas[tarefas.index { |tarefa| tarefa.id == gets.to_i }].done = true
+    id = gets.to_i
+    tarefas[tarefas.index { |tarefa| tarefa.id == id }].done = true
+    puts tarefas[tarefas.index { |tarefa| tarefa.id == id }].to_s
   end
   opcao = menu
 end
