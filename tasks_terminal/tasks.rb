@@ -1,4 +1,5 @@
-require './task'
+require_relative 'task'
+require_relative 'emergencial_task'
 
 INSERIR_TAREFA = 1
 MOSTRAR_TAREFA = 2
@@ -20,7 +21,29 @@ def print_tarefas(tarefas)
   if tarefas.empty?
     puts "N\xC3\xA3o h\xC3\xA1 tarefas"
   elsif
-    tarefas.each { |t| puts t.to_s }
+    tarefas.each_with_index { |t, index| puts "#{index}: #{t.to_s}" }
+  end
+end
+
+def criar_tarefa
+  puts "Informe o nome da tarefa"
+  nome = gets.chomp
+  puts "Ela est\xC3\xA1 finalizada? (1 - Sim | 2 - Nao)"
+  finalizada = gets.to_i
+  if finalizada == 1
+    Task.new(nome, true)
+  else
+    puts "Ela é urgente? (1 - Sim | 2 - Nao)"
+    urgente = gets.to_i
+    if urgente == 1
+      puts 'Quem é o responsavel?'
+      responsavel = gets.chomp
+      puts 'Em quantos dias ela deve ser encerrada?'
+      dias_para_finalizar = gets.to_i
+      EmergencialTask.new(nome, responsavel, dias_para_finalizar)
+    else
+      Task.new(nome)
+    end
   end
 end
 
@@ -30,16 +53,8 @@ tarefas = []
 
 while opcao != SAIR
   if opcao == INSERIR_TAREFA
-    puts "\nInserindo uma nova tarefa\nInforme o nome da tarefa"
-    nome_tarefa = gets.chomp
-    puts "Ela est\xC3\xA1 finalizada (1 - Sim | 2 - Nao)"
-    finalizada = gets.to_i
-    tarefas << if finalizada == 1
-                 Task.new(nome_tarefa, tarefas.length, true)
-               else
-                 Task.new(nome_tarefa, tarefas.length)
-               end
-    puts 'Nova tarefa cadastrada: ' + nome_tarefa
+    puts "\nInserindo uma nova tarefa"
+    tarefas << criar_tarefa
   elsif opcao == MOSTRAR_TAREFA
     puts "\nSuas tarefas sao:"
     print_tarefas tarefas
@@ -53,8 +68,8 @@ while opcao != SAIR
     print_tarefas tarefas
     puts "\nInforme o id da tarefa a marcar como finalizada"
     id = gets.to_i
-    tarefas[tarefas.index { |tarefa| tarefa.id == id }].done = true
-    puts tarefas[tarefas.index { |tarefa| tarefa.id == id }].to_s
+    tarefas[id].done = true
+    puts tarefas[id].to_s
   end
   opcao = menu
 end

@@ -1,15 +1,14 @@
 class Task
   attr_accessor :nome
   attr_writer :done
-  attr_reader :id
-  def initialize(nome_tarefa, id, done = false)
+
+  def initialize(nome_tarefa, done = false)
     @nome = nome_tarefa
-    @id = id
     @done = done
   end
 
   def to_s
-    "A tarefa #{@nome} de id #{@id} #{done? ? 'está finalizada' : 'não está finalizada'}\n"
+    "A tarefa #{@nome} #{done? ? 'está finalizada' : 'não está finalizada'}\n"
   end
 
   def done?
