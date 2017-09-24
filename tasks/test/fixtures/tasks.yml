@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  responsible: MyString
+  emergencial: false
+  due_date: 2017-09-24
+
+two:
+  name: MyString
+  responsible: MyString
+  emergencial: false
+  due_date: 2017-09-24
