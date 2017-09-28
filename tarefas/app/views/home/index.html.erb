@@ -5,7 +5,9 @@
 <ul>
 <% @tasks.each do |t| %>
   <li>
-  <%= t.name %> || <a href="/tasks/<%=t.id%>">Informações</a> 
+  <%= t.name %> || <a href="/tasks/<%=t.id%>">Informações</a>
   </li>
 <% end %>
 </ul>
+
+<a href="/tasks/new">Criar nova tarefa</a>
