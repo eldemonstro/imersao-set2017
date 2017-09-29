@@ -5,3 +5,5 @@
   <li>Criado em: <%= @task.created_at %></li>
   <li>Atualizado em: <%= @task.updated_at %></li>
 </ul>
+
+<%= link_to('Editar', edit_task_path(@task)) %>

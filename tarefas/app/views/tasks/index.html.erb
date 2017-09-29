@@ -1,1 +1,11 @@
 <h1>Tarefas</h1>
+
+<ul>
+<% @tasks.each do |t| %>
+  <li>
+  <%= t.name %> || <%= link_to('Informações', task_path(t)) %>
+  </li>
+<% end %>
+</ul>
+
+<%= link_to('Criar nova', new_task_path) %>
